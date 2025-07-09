@@ -63,7 +63,7 @@ export class QueueWorkerService implements OnModuleInit {
     if (ext === '.csv') {
       await this.processCsv(fileInfo.path);
     } else if (ext === '.xlsx' || ext === '.xls') {
-      await this.processExcel(fileInfo.path);
+      this.processExcel(fileInfo.path);
     } else {
       this.logger.warn(`Extensão não suportada: ${ext}`);
     }
@@ -82,6 +82,8 @@ export class QueueWorkerService implements OnModuleInit {
       });
       parser.on('end', () => {
         this.logger.log(`CSV processado: ${rowCount} linhas`);
+        fs.unlinkSync(filePath);
+        this.logger.log(`Arquivo removido da pasta uploads: ${filePath}`);
         resolve();
       });
       parser.on('error', (err) => {
@@ -92,7 +94,7 @@ export class QueueWorkerService implements OnModuleInit {
     });
   }
 
-  private async processExcel(filePath: string) {
+  private processExcel(filePath: string) {
     const workbook = XLSX.readFile(filePath, {
       type: 'file',
       cellDates: true,
@@ -102,5 +104,8 @@ export class QueueWorkerService implements OnModuleInit {
       const rows = XLSX.utils.sheet_to_json(worksheet, { defval: null });
       this.logger.log(`Excel processado: ${rows.length} linhas`);
     }
+
+    fs.unlinkSync(filePath);
+    this.logger.log(`Arquivo removido da pasta uploads: ${filePath}`);
   }
 }

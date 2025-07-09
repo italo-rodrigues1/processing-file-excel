@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AzureQueueService } from './azure-queue.service';
+import { AzureQueueService } from '../queue/azure-queue.service';
 import { Inject } from '@nestjs/common';
 
 @Injectable()
@@ -10,7 +10,6 @@ export class FileUploadService {
   ) {}
 
   async enqueueFile(file: Express.Multer.File) {
-    console.log('Entrou no enqueueFile');
     const message = JSON.stringify({
       originalname: file.originalname,
       filename: file.filename,
