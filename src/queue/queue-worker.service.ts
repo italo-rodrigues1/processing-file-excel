@@ -11,7 +11,7 @@ export class QueueWorkerService implements OnModuleInit {
   private readonly logger = new Logger(QueueWorkerService.name);
   private queueClient: QueueClient;
   private readonly queueName = 'file-processing';
-  private readonly pollInterval = 5000; // 5 segundos
+  private readonly pollInterval = 2000; // 2 segundos
 
   constructor(private configService: ConfigService) {
     const connectionString = this.configService.get<string>(

@@ -26,6 +26,46 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+### Otimizações para Upload de Arquivos Grandes
+
+Esta aplicação foi otimizada para processar uploads de arquivos grandes (até 2GB por arquivo) com as seguintes melhorias:
+
+#### Configurações Implementadas:
+
+- **Limite de arquivo**: 2GB por arquivo
+- **Máximo de arquivos**: 25 arquivos simultâneos
+- **Timeout de upload**: 5 minutos
+- **Processamento em lotes**: 5 arquivos por vez para evitar sobrecarga de memória
+- **Configuração de memória**: 4GB de heap para Node.js
+
+#### Como usar com otimizações:
+
+**Windows:**
+
+```bash
+start-optimized.bat
+```
+
+**Linux/Mac:**
+
+```bash
+chmod +x start-optimized.sh
+./start-optimized.sh
+```
+
+#### Configurações manuais:
+
+```bash
+# Configurar memória do Node.js
+set NODE_OPTIONS=--max-old-space-size=4096
+
+# Configurar thread pool
+set UV_THREADPOOL_SIZE=64
+
+# Iniciar aplicação
+npm run start:dev
+```
+
 ## Project setup
 
 ```bash
